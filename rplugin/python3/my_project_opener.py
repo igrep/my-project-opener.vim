@@ -2,6 +2,7 @@ import pynvim
 
 from collections import deque
 from pathlib import Path
+from shutil import copyfile
 
 @pynvim.plugin
 class MyProjectOpener(object):
@@ -21,6 +22,17 @@ class MyProjectOpener(object):
         recent_vimrc_count = \
                 self.vim.eval('g:my_project_opener_recent_project_vimrc_max_projects')
         RecentVimrcsFile(recent_vimrc_path, recent_vimrc_count).add(vimrc_path_full)
+
+    @pynvim.function('MyProjectOpenerInstallProjectVim')
+    def install_project_vim(self, args):
+        template_path = Path(args[0]).expanduser()
+        project_vim_path = Path('.project.vim')
+        if not project_vim_path.exists():
+            copy(template_path, project_vim_path)
+
+        launch_bat_path = Path('!launch.bat')
+        if not launch_bat_path.exists():
+            launch_bat_path.write_text("start nvim-qt -- -c call MyProjectOpenerSource('.project.vim')\n")
 
 
 class RecentVimrcsFile(object):
