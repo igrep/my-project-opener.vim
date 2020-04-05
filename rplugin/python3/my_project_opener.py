@@ -32,7 +32,7 @@ class MyProjectOpener(object):
 
         launch_bat_path = Path('!launch.bat')
         if not launch_bat_path.exists():
-            launch_bat_path.write_text("start nvim-qt -- -c call MyProjectOpenerSource('.project.vim')\n")
+            launch_bat_path.write_text("start nvim-qt -- -c \"call MyProjectOpenerSource('.project.vim')\"\n")
 
 
 class RecentVimrcsFile(object):
