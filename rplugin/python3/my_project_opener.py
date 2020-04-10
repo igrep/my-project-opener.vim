@@ -28,7 +28,7 @@ class MyProjectOpener(object):
         template_path = Path(args[0]).expanduser()
         project_vim_path = Path('.project.vim')
         if not project_vim_path.exists():
-            copy(template_path, project_vim_path)
+            copyfile(template_path, project_vim_path)
 
         launch_bat_path = Path('!launch.bat')
         if not launch_bat_path.exists():
